@@ -61,3 +61,15 @@ body {
   margin: 0 auto;
   font-size: 112%;
 }
+
+#landscape {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+h1 {
+  color:#3f352c
+}
