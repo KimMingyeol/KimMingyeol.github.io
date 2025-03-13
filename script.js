@@ -3,12 +3,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const tab = document.querySelector(".tab");
 
     function adjustImage() {
-        const imgRatio = img.naturalWidth / img.naturalHeight;
-        const tabRatio = tab.offsetWidth / 500;
+        const min_landscape_image_height = 500; // MODIFY HERE if you want
 
-        // window size; shrinked : enlarged
-        img.style.objectFit = imgRatio > tabRatio ? "cover" : "contain";
-        img.style.height = imgRatio > tabRatio ? "500px" : "auto";
+        const img_ratio = img.naturalWidth / img.naturalHeight;
+        const width_percentage_landscape_image_covers_tab = 100;    // MODIFY HERE if you change the image's "width(%)" property in style.scss
+        const min_tab_width_to_keep_img_ratio = (100/width_percentage_landscape_image_covers_tab) * (min_landscape_image_height * img_ratio);
+
+        // Window size; Shrinked (landscape image cropped in width-axis) : Enlarged (landscape image expanded with img_ratio kept)
+        const current_tab_width = tab.offsetWidth;
+        img.style.objectFit = min_tab_width_to_keep_img_ratio > current_tab_width ? "cover" : "contain";
+        img.style.height = min_tab_width_to_keep_img_ratio > current_tab_width ? min_landscape_image_height.toString() + "px" : "auto";
     }
 
     window.addEventListener("resize", adjustImage);
